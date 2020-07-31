@@ -7,19 +7,23 @@ import java.sql.SQLException;
 
 public class InitTable {
 
-    String instanceName = "HPDL380";
-    String databaseName = "Документация";
-    String userName = "NARP\\Pridvorov";
-    String pass = "Pridv0r0v0915@";
-    String connectionUrl = "jdbc:sqlserver://%1$s;databaseName=%2$s;user=%3$s;password=%4$s;";
-    String connectionString = String.format(connectionUrl, instanceName, databaseName, userName, pass);
+    //driver={SQL Server};server=HPDL380;uid=reader;pwd=1234qsw;database=Документация;
+
+      String connectionUrl =
+            "jdbc:sqlserver://HPDL380:1433;"
+                    + "database=Документация;"
+                    + "user=pridvorov@narp;"
+                    + "password=Pridvorov1509@;"
+                    + "encrypt=true;"
+                    + "trustServerCertificate=false;"
+                    + "loginTimeout=30;";
 
     public InitTable() throws SQLException {
 
         try {
               Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
               System.out.print("Connecting to SQL Server ... ");
-              try (Connection connection = DriverManager.getConnection(connectionString)) {
+              try (Connection connection = DriverManager.getConnection(connectionUrl)) {
                   System.out.println("Done.");
               }
                   catch (SQLException ex)
