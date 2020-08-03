@@ -11,33 +11,34 @@ public class InitTable {
     private final String user = "pridvorov";
     private final String password = "Pridv0r0v0915@";
 
-    private final String sqlStringOstatkiall = "SELECT * FROM OSTATKIFORTOIRFROMNARZ";
-    private final String sqlStringOstatkiForOne = "SELECT * FROM OSTATKIFORTOIRFROMNARZ where nomen ?";
+    public  ResultSet getExecuteQuery() {
+        return executeQuery;
+    }
 
-    public InitTable() {
-        try {
-            Connection conn = getNewConnection();
+
+    public static ResultSet executeQuery = null;
+
+    public InitTable(String sqlStringOstatkiall)  {
             try {
-                Statement statement = this.getNewConnection().createStatement();
+                Statement statement = getNewConnection().createStatement();
                 try {
-                    ResultSet executeQuery = statement.executeQuery(sqlStringOstatkiall);
-                    return
-                            ;
+                   executeQuery = statement.executeQuery(sqlStringOstatkiall);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    Connection getNewConnection() throws SQLException
-    {
-        return DriverManager.getConnection(connectionUrl, this.user, this.password);
+    private Connection getNewConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("net.sourceforge.jtds.jdbc.Driver");
+        return DriverManager.getConnection(connectionUrl,user,password);
     }
+
 
 
 }
